@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<title>radio demo2</title>
+</head>
+<script src="jq.js"></script>
+<style>
+	html,body{
+		margin:0;
+		padding: 10px;
+	}
+	label{
+		display: block;
+		margin-bottom: 10px;
+	}
+	input{
+		position: absolute;
+		top:-9999px;
+	}
+	.radiolab.unchecked i{
+		display:inline-block;
+		width: 17px;
+		height:17px;
+		margin-right: 10px;
+		background: url(radio1.png) no-repeat 0 0;
+		vertical-align: middle;
+	}
+	.radiolab.checked i{
+		display:inline-block;
+		width: 17px;
+		height:17px;
+		margin-right: 10px;
+		background: url(radio2.png) no-repeat 0 0;
+		vertical-align: middle;
+	}
+	.btn{
+		width:20%;
+		height:30px;
+		line-height: 30px;
+		background: #5c90d2;
+		color: #fff;
+		font-size: 16px;
+		text-align: center;
+		margin-left: 4px;
+		outline: none;
+		border: 1px solid #5c90d2;
+		cursor: pointer;
+	}
+</style>
+<body>
+<label class="radiolab checked">
+	<input type="radio" name="type" data-step = "1" data-type = "a"><i></i> 类型1
+</label>
+<label class="radiolab unchecked">
+	<input type="radio" name="type" data-step = "1" data-type = "b"><i></i> 类型2
+</label>
+<label class="radiolab unchecked">
+	<input type="radio" name="type" data-step = "1" data-type = "c"><i></i> 类型3
+</label>	
+<button id="btn" class="btn">下一步</button>
+</body>
+</html>
+<script>
+	'use strict';
+	var obj = {};
+	obj.type="a";
+	$(document.body).on('click','label',function(e){
+		var tagName = e.target.tagName.toLowerCase();
+		if(tagName === 'input'|| tagName === 'a')return;
+		var $label = $(this);
+		var $radio = $label.find('input[type=radio]');
+		if(!$radio.length)return;
+		$('.radiolab').removeClass('checked').addClass('unchecked');
+		$('input[type=radio]').prop('checked',false);
+		$('input[type=radio]').trigger('change');
+		if(!$radio.prop('checked')){
+			$label.removeClass('unchecked').addClass('checked');
+			setTimeout(function(){
+				$radio.prop('checked',true);
+				$radio.trigger('change');
+			},0);		
+		}else{
+			$label.addClass('unchecked').removeClass('checked');
+			setTimeout(function(){
+				$radio.prop('checked',false);
+				$radio.trigger('change');
+			},0);
+		}
+	}).on('change','input[type=radio]',function(){
+		var $this = $(this);
+		var step = $this.attr('data-step');
+		obj.type = $this.attr('data-type');
+		step = +step;
+		if(step === 1){
+			console.log(obj.type);
+		}
+	});
+	var button = document.getElementById('btn');
+	button.addEventListener('click',function(){
+		alert(obj.type);
+	},false);
+</script>

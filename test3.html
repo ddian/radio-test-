@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<title>radio demo1</title>
+</head>
+<style>
+	html,body{
+		margin:0;
+		padding:0;
+	}
+	.my-box {
+	   padding: 4px;
+	   width: 100%;
+	}
+	label{
+		font-size: 16px;
+		display: block;
+		margin: 10px;
+		vertical-align: middle;
+		line-height: 20px;
+	}
+	.my-radio {
+	   color: #000;	   
+	   position: relative;
+	   cursor: pointer;
+	}
+	.my-radio>input {
+	   opacity: 0;
+	   position: absolute;
+	   outline: none;
+	}
+	.my-radio>input:checked + span{		
+		width:14px;
+	    height:14px;
+	    border: 3px solid #ddd;
+	    border-radius: 50%;
+	    background-color: #5c90d2;
+	}
+	.my-radio>input +span{
+		position: relative;
+		top:2px;
+		display: inline-block;
+		margin-right: 10px;		
+		width:14px;
+		height:14px;
+		background-color:#fff;
+		border: 3px solid #ddd;
+		-webkit-transition:background-color .2s;
+		transition:background-color: .2s;
+		border-radius: 50%;
+	}
+	.btn{
+		width:20%;
+		height:30px;
+		line-height: 30px;
+		background: #5c90d2;
+		color: #fff;
+		font-size: 16px;
+		text-align: center;
+		margin-left: 4px;
+		outline: none;
+		border: 1px solid #5c90d2;
+		cursor: pointer;
+	}
+</style>
+<script src="angular.js"></script>
+<body>
+	<div ng-app="app">
+	   	<div ng-controller="ctrl" class="my-box">
+			<my-radio model="mode1" value="MODE1" label="a"></my-radio>
+			<my-radio model="mode1" value="MODE2" label="b"></my-radio>
+			<my-radio model="mode1" value="MODE3" label="c"></my-radio>
+			<p>Selected is: {{mode1}}</p>
+			<my-radio model="mode2" value="MODE_A" label="d"></my-radio>
+			<my-radio model="mode2" value="MODE_B" label="e"></my-radio>
+			<my-radio model="mode2" value="MODE_C" label="f"></my-radio>
+			<p>Selected is: {{mode2}}</p>
+			<button class="btn" ng-click="getValue()">下一步</button>
+	   	</div>
+	</div>
+</body>
+</html>
+<script>
+	'use strict';
+	var app = angular.module('app', []);
+
+	app.controller('ctrl', ['$scope', function($scope) {
+		$scope.mode1 = 'MODE2';
+		$scope.mode2 = 'MODE_B';
+		var valueObj = {
+			a:'文字内容1',
+			b:'文字内容2',
+			c:'文字内容3',
+			d:'文字内容4',
+			e:'文字内容5',
+			f:'文字内容6'
+		};
+		$scope.a = valueObj.a;
+		$scope.b = valueObj.b;
+		$scope.c = valueObj.c;
+		$scope.d = valueObj.d;
+		$scope.e = valueObj.e;
+		$scope.f = valueObj.f;
+
+		$scope.getValue = function(){
+			alert($scope.mode1+'--'+$scope.mode2);
+		};
+	}]);
+
+	app.directive('myRadio', function() {
+	   	return {
+			restrict: 'E',
+			scope: {
+			 	model: '=',
+			 	value: '@',
+			 	label: '='
+			},
+			template:
+				'<label class="my-radio"' +
+				' ng-model="model">' +
+				'<input type="radio" name="{{model}}"' +
+				' ng-model="model"' +
+				' ng-value="value"' +
+				' ng-checked="model==value"><span></span> {{label}}</label>',
+			link:function(scope,elem){
+				// console.log(elem);
+			}
+	   	};
+	});
+</script>

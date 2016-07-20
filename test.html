@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<style>
+	html,body{
+		margin:0;
+		padding: 0;
+	}
+	label{
+		display: block;
+		margin-bottom: 10px;
+	}
+	input{
+		position: absolute;
+		top:-9999px;
+	}
+	i{
+		display:inline-block;
+		width: 17px;
+		height:17px;
+		margin-right: 10px;
+		background: url(radio1.png) no-repeat 0 0;
+		vertical-align: middle;
+	}
+	input:checked+i{
+		background: url(radio2.png) no-repeat 0 0;
+	}
+</style>
+<body>
+<label>
+	<input type="radio" name="type"><i></i> 类型1
+</label>
+<label>
+	<input type="radio" name="type"><i></i> 类型2
+</label>
+<label>
+	<input type="radio" name="type"><i></i> 类型3
+</label>	
+</body>
+</html>
